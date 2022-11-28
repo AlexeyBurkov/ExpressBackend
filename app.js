@@ -3,9 +3,11 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-const orderRouter = require("./routes/orders");
-const locationRouter = require("./routes/locations");
-const cargoTypeRouter = require("./routes/cargoTypes");
+const routerFactory = require("./routes/routerFactory");
+
+const orderRouterConfig = require("./routes/orders");
+const locationRouterConfig = require("./routes/locations");
+const cargoTypeRouterConfig = require("./routes/cargoTypes");
 
 const app = express();
 
@@ -15,9 +17,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/orders", orderRouter);
-app.use("/locations", locationRouter);
-app.use("/cargo_types", cargoTypeRouter);
+app.use("/orders", routerFactory(orderRouterConfig));
+app.use("/locations", routerFactory(locationRouterConfig));
+app.use("/cargo_types", routerFactory(cargoTypeRouterConfig));
 
 app.use((req, res) => {
   res.status(404).send("Incorrect path or unexpected params!\n");

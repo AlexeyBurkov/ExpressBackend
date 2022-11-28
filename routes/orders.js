@@ -1,20 +1,24 @@
-const express = require("express");
-const router = express.Router();
+const orders = require("../database/orders");
 
-router.get("/list", (req, res, next) => {
-  //todo
-});
-
-router.get("/add", (req, res, next) => {
-  //todo
-});
-
-router.get("/detail", (req, res, next) => {
-  //todo
-});
-
-router.get("/edit", (req, res, next) => {
-  //todo
-});
-
-module.exports = router;
+module.exports = [
+  {
+    path: "/list",
+    method: "GET",
+    handler: orders.list
+  },
+  {
+    path: "/add",
+    method: "POST",
+    handler: orders.add
+  },
+  {
+    path: "/detail/:id",
+    method: "GET",
+    handler: orders.detail
+  },
+  {
+    path: "/edit/:id",
+    method: "PUT",
+    handler: orders.edit
+  }
+];
