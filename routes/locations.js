@@ -1,24 +1,4 @@
 const loc = require("../database/locations");
+const sp = require("../support");
 
-module.exports = [
-  {
-    path: "/list",
-    method: "GET",
-    handler: loc.list
-  },
-  {
-    path: "/add",
-    method: "POST",
-    handler: loc.add
-  },
-  {
-    path: "/detail/:id",
-    method: "GET",
-    handler: loc.detail
-  },
-  {
-    path: "/edit/:id",
-    method: "PUT",
-    handler: loc.edit
-  }
-];
+module.exports = sp.standardConfGenerator(loc);

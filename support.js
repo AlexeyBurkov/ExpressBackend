@@ -14,3 +14,27 @@ exports.emptyValidator = (data) => Object.keys(data).length === 0;
 
 //  Validator checks if string is less then quantity of symbols
 exports.lengthValidator = (string, len) => string.length <= len;
+
+//  Generator for standard router config
+exports.standardConfGenerator = (controller) => [
+  {
+    path: "/list",
+    method: "GET",
+    handler: controller.list
+  },
+  {
+    path: "/add",
+    method: "POST",
+    handler: controller.add
+  },
+  {
+    path: "/detail/:id",
+    method: "GET",
+    handler: controller.detail
+  },
+  {
+    path: "/edit/:id",
+    method: "PUT",
+    handler: controller.edit
+  }
+]

@@ -1,24 +1,4 @@
 const ct = require("../database/cargoTypes");
+const sp = require("../support");
 
-module.exports = [
-  {
-    path: "/list",
-    method: "GET",
-    handler: ct.list
-  },
-  {
-    path: "/add",
-    method: "POST",
-    handler: ct.add
-  },
-  {
-    path: "/detail/:id",
-    method: "GET",
-    handler: ct.detail
-  },
-  {
-    path: "/edit/:id",
-    method: "PUT",
-    handler: ct.edit
-  }
-];
+module.exports = sp.standardConfGenerator(ct);
