@@ -79,7 +79,7 @@ exports.edit = (req, res, next) => {
   // querying database
   db.none(
     "update cargo_types set cargo_type_name = $(cargo_type_name) where cargo_type_id = $(id)",
-    {...req.body, ...req.params}
+    { ...req.body, ...req.params }
   )
     .then(() => {
       res.status(200).send("Successfully updated cargo type!\n");
