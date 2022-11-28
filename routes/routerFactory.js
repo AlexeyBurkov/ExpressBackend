@@ -1,6 +1,24 @@
 const express = require("express");
+const locationsConf = require("./locations");
+const cargoTypesConf = require("./cargoTypes");
+// const ordersConf = require("./orders");
 
-module.exports = function(config) {
+const mainConfig = [
+  {
+    path: "/locations",
+    config: locationsConf
+  },
+  {
+    path: "/cargo_types",
+    config: cargoTypesConf
+  },
+  // {
+  //   path: "/orders",
+  //   config: ordersConf
+  // }
+];
+
+const supportRouterFactory = config => {
   const router = express.Router();
   config.forEach((element) => {
     router.all(element.path, (req, res, next) => {
@@ -9,4 +27,13 @@ module.exports = function(config) {
     });
   });
   return router;
-}
+};
+
+module.exports = () => {
+  const router = express.Router();
+  mainConfig.forEach((element) => {
+    const subRouter = supportRouterFactory(element.config);
+    router.use(element.path, subRouter);
+  });
+  return router;
+};
