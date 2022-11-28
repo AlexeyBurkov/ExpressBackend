@@ -7,6 +7,10 @@ exports.add = (req, res, next) => {
     res.status(400).send("Incorrect body of request! Expected \"location_name\".\n");
     return;
   }
+  if (!sp.lengthValidator(req.body["location_name"], 200)) {
+    res.status(400).send("Incorrect body of request! Expected \"location_name\" to be shorter then 200 symbols.\n");
+    return;
+  }
   // querying database
   db.none(
     "insert into locations (location_name) values ($(location_name))",
@@ -55,13 +59,17 @@ exports.detail = (req, res, next) => {
 };
 
 exports.edit = (req, res, next) => {
-  // validation
+  // validation of body
   if (sp.emptyValidator(req.body)) {
     res.status(200).send("No changes!\n");
     return;
   }
   if (!sp.keysValidator(req.body, ["location_name"])) {
     res.status(400).send("Incorrect body of request! Expected \"location_name\".\n");
+    return;
+  }
+  if (!sp.lengthValidator(req.body["location_name"], 200)) {
+    res.status(400).send("Incorrect body of request! Expected \"location_name\" to be shorter then 200 symbols.\n");
     return;
   }
   // querying database
