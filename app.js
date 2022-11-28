@@ -5,6 +5,7 @@ const logger = require("morgan");
 
 const orderRouter = require("./routes/orders");
 const locationRouter = require("./routes/locations");
+const cargoTypeRouter = require("./routes/cargoTypes");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/orders", orderRouter);
 app.use("/locations", locationRouter);
+app.use("/cargo_types", cargoTypeRouter);
 
 app.use((req, res) => {
   res.status(404).send("Incorrect path or unexpected params!\n");
