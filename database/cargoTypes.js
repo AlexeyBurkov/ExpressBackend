@@ -2,6 +2,7 @@ const db = require("./database");
 const sp = require("../support");
 
 exports.add = (req, res, next) => {
+  // Handler for adding locations
   // validation of body
   if (!sp.keysValidator(req.body, ["cargo_type_name"])) {
     res.status(400).send("Incorrect body of request! Expected \"cargo_type_name\".\n");
@@ -25,6 +26,7 @@ exports.add = (req, res, next) => {
 };
 
 exports.list = (req, res, next) => {
+  // Handler for listing locations
   // validation of body
   if (!sp.emptyValidator(req.body)) {
     res.status(400).send("Incorrect body of request! Expected empty.\n");
@@ -42,6 +44,7 @@ exports.list = (req, res, next) => {
 };
 
 exports.detail = (req, res, next) => {
+  // Handler for retrieving info about location
   // validation of body
   if (!sp.emptyValidator(req.body)) {
     res.status(400).send("Incorrect body of request! Expected none.\n");
@@ -59,6 +62,7 @@ exports.detail = (req, res, next) => {
 };
 
 exports.edit = (req, res, next) => {
+  // Handler for editing info about location
   // validation of body
   if (sp.emptyValidator(req.body)) {
     res.status(200).send("No changes!\n");
