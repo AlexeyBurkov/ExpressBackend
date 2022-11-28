@@ -35,7 +35,7 @@ exports.list = (req, res, next) => {
   // querying database
   db.manyOrNone("select * from locations")
     .then((data) => {
-      if (data == null) res.status(200).send("No locations!\n");
+      if (data.length === 0) res.status(200).send("No locations!\n");
       else res.status(200).json(data);
     })
     .catch((error) => {
