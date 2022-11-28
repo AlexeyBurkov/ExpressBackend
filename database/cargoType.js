@@ -3,21 +3,21 @@ const sp = require("../support");
 
 exports.add = (req, res, next) => {
   // validation of body
-  if (!sp.keysValidator(req.body, ["location_name"])) {
-    res.status(400).send("Incorrect body of request! Expected \"location_name\".\n");
+  if (!sp.keysValidator(req.body, ["cargo_type_name"])) {
+    res.status(400).send("Incorrect body of request! Expected \"cargo_type_name\".\n");
     return;
   }
-  if (!sp.lengthValidator(req.body["location_name"], 200)) {
-    res.status(400).send("Incorrect body of request! Expected \"location_name\" to be shorter then 200 symbols.\n");
+  if (!sp.lengthValidator(req.body["cargo_type_name"], 100)) {
+    res.status(400).send("Incorrect body of request! Expected \"cargo_type_name\" to be shorter then 100 symbols.\n");
     return;
   }
   // querying database
   db.none(
-    "insert into locations (location_name) values ($(location_name))",
+    "insert into cargo_types (cargo_type_name) values ($(cargo_type_name))",
     req.body
   )
     .then(() => {
-      res.status(200).send("Successfully added new location!\n");
+      res.status(200).send("Successfully added new cargo type!\n");
     })
     .catch((error) => {
       next(error);
@@ -31,9 +31,9 @@ exports.list = (req, res, next) => {
     return;
   }
   // querying database
-  db.manyOrNone("select * from locations")
+  db.manyOrNone("select * from cargo_types")
     .then((data) => {
-      if (data == null) res.status(200).send("No locations!\n");
+      if (data == null) res.status(200).send("No cargo types!\n");
       else res.status(200).json(data);
     })
     .catch((error) => {
@@ -48,9 +48,9 @@ exports.detail = (req, res, next) => {
     return;
   }
   // querying database
-  db.oneOrNone("select * from locations where location_id = $(id)", req.params)
+  db.oneOrNone("select * from cargo_types where cargo_type_id = $(id)", req.params)
     .then((data) => {
-      if (data == null) res.status(400).send("Invalid location id!\n");
+      if (data == null) res.status(400).send("Invalid cargo type id!\n");
       else res.status(200).json(data);
     })
     .catch((error) => {
@@ -64,21 +64,21 @@ exports.edit = (req, res, next) => {
     res.status(200).send("No changes!\n");
     return;
   }
-  if (!sp.keysValidator(req.body, ["location_name"])) {
-    res.status(400).send("Incorrect body of request! Expected \"location_name\".\n");
+  if (!sp.keysValidator(req.body, ["cargo_type_name"])) {
+    res.status(400).send("Incorrect body of request! Expected \"cargo_type_name\".\n");
     return;
   }
-  if (!sp.lengthValidator(req.body["location_name"], 200)) {
-    res.status(400).send("Incorrect body of request! Expected \"location_name\" to be shorter then 200 symbols.\n");
+  if (!sp.lengthValidator(req.body["cargo_type_name"], 100)) {
+    res.status(400).send("Incorrect body of request! Expected \"cargo_type_name\" to be shorter then 100 symbols.\n");
     return;
   }
   // querying database
   db.none(
-    "update locations set location_name = $(location_name) where location_id = $(id)",
+    "update cargo_types set cargo_type_name = $(cargo_type_name) where cargo_type_id = $(id)",
     {...req.body, ...req.params}
   )
     .then(() => {
-      res.status(200).send("Successfully updated location!\n");
+      res.status(200).send("Successfully updated cargo type!\n");
     })
     .catch((error) => {
       next(error);
